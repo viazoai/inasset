@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  inasset-app:
+    image: python:3.11-slim
+    container_name: inasset
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "3101:8501"
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Seoul
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt && 
+             streamlit run src/app.py"
+    restart: always
+
+  inasset-ingest:
+    image: python:3.11-slim
+    container_name: inasset-ingest
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "3102:3102"
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Seoul
+    command: >
+      sh -c "pip install --no-cache-dir -r requirements.txt &&
+             uvicorn src.api.ingest:app --host 0.0.0.0 --port 3102"
+    restart: always

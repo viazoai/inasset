@@ -1,0 +1,13 @@
+streamlit
+streamlit-authenticator
+pandas
+pyzipper
+openpyxl
+openai
+python-dotenv
+tabulate
+plotly
+fastapi
+uvicorn[standard]
+httpx
+python-multipart
