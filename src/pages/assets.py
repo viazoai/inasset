@@ -17,7 +17,7 @@ def render():
         </style>
     """, unsafe_allow_html=True)
     st.markdown('<div class="page-header">자산 현황</div>', unsafe_allow_html=True)
-    st.markdown('<div class="page-subtitle">현재 자산 분포와 약 한 달 전 대비 흐름을 확인합니다.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="page-subtitle">현재 자산 분포와 지난달 말일 대비 흐름을 확인합니다.</div>', unsafe_allow_html=True)
 
     # 1. 연/월 선택기
     months_df = get_available_asset_months()
@@ -63,8 +63,8 @@ def render():
         current_date_str = owner_data['snapshot_date'].iloc[0]
         current_date = pd.to_datetime(current_date_str)
         
-        # 약 한 달 전(30일 전) 날짜 계산
-        target_prev_date = current_date - timedelta(days=30)
+        # 지난달 말일 계산
+        target_prev_date = current_date.replace(day=1) - timedelta(days=1)
         
         # DB에서 해당 소유자의 30일 전과 가장 가까운 데이터 가져오기 (db_handler 기능 활용)
         # get_previous_assets 함수가 owner와 target_date를 받는다고 가정하고 로직 구성
