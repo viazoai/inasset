@@ -8,11 +8,20 @@ import yaml
 def render(authenticator, config, config_path):
     """미인증 상태의 로그인/회원가입 UI를 렌더링한다. 인증 전까지 이후 실행을 차단한다."""
 
-    # 사이드바 및 토글 버튼 숨김
+    # 사이드바 및 토글 버튼 숨김 + 로그인 폼 스타일
     st.markdown("""
         <style>
         [data-testid="stSidebar"],
         [data-testid="collapsedControl"] { display: none !important; }
+
+        /* 폼 타이틀 가운데 정렬 + 링크 아이콘 숨김 */
+        [data-testid="stHeadingWithActionElements"] { text-align: center; }
+        [data-testid="stHeaderActionElements"] { display: none; }
+
+        /* 로그인 버튼 가로 꽉 채우기 */
+        [data-testid="stElementContainer"]:has([data-testid="stFormSubmitButton"]),
+        [data-testid="stFormSubmitButton"],
+        [data-testid="stBaseButton-secondaryFormSubmit"] { width: 100% !important; }
         </style>
     """, unsafe_allow_html=True)
 
@@ -21,7 +30,7 @@ def render(authenticator, config, config_path):
         st.markdown("""
             <div class="login-header">
                 <div style="font-size:3.5rem;">🏛️</div>
-                <h1 style="color:#2575fc; margin:0.25rem 0;">InAsset</h1>
+                <p style="color:#2575fc; font-size:2rem; font-weight:700; margin:0.25rem 0;">InAsset</p>
                 <p style="opacity:0.65; margin:0;">우리 부부의 스마트 자산 관리자</p>
             </div>
         """, unsafe_allow_html=True)
@@ -33,7 +42,6 @@ def render(authenticator, config, config_path):
                 location='main',
                 captcha=False,
                 fields={
-                    'Form name': '로그인',
                     'Username': '이메일',
                     'Password': '비밀번호',
                     'Login': '로그인',
@@ -51,6 +59,12 @@ def render(authenticator, config, config_path):
 
         with tab_register:
             _render_register_form(config, config_path)
+
+    with col:
+        st.markdown(
+            "<p style='font-size:0.8rem; opacity:0.4; text-align:center; margin-top:1.5rem;'>v1.0.0 · © 2025 zoai</p>",
+            unsafe_allow_html=True,
+        )
 
     if st.session_state.get('authentication_status') is not True:
         st.stop()

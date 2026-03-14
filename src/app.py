@@ -138,12 +138,12 @@ _pages = _all_pages if _role == 'admin' else _all_pages[:-1]
 
 # 사이드바 구성
 with st.sidebar:
-    st.markdown("<h1 style='text-align: center; color: #2575fc; font-size: 2rem;'>🏛️ InAsset</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; font-size: 1rem; opacity: 0.7;'>우리 부부의 스마트 자산 관리자</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #2575fc; font-size: 2rem; font-weight: 700; margin: 0.25rem 0;'>🏛️ InAsset</p>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; opacity: 0.65; margin: 0;'>우리 부부의 스마트 자산 관리자</p>", unsafe_allow_html=True)
     _latest_date = get_latest_transaction_date()
     if _latest_date:
         st.markdown(
-            f"<p style='text-align: center; font-size: 0.8rem; opacity: 0.5; margin: 0;'>📅 Updated: {_latest_date}</p>",
+            f"<p style='text-align: center; font-size: 0.8rem; opacity: 0.5; margin: 1rem 0 0;'>📅 Updated: {_latest_date}</p>",
             unsafe_allow_html=True,
         )
     st.markdown("---")
@@ -170,6 +170,11 @@ with st.sidebar:
             pass
         st.session_state.clear()
         st.rerun()
+
+    st.markdown(
+        "<p style='font-size:0.8rem; opacity:0.4; text-align:center; margin-top:0.8rem;'>v1.0.0 · © 2025 zoai</p>",
+        unsafe_allow_html=True,
+    )
 
     # 관리자 전용: 승인 대기 계정 관리 (하단 아래)
     if _role == 'admin':
