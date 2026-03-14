@@ -25,7 +25,7 @@ def render(authenticator, config, config_path):
         </style>
     """, unsafe_allow_html=True)
 
-    _, col, _ = st.columns([1, 1.5, 1])
+    _, col, _ = st.columns([1.25, 1, 1.25])
     with col:
         st.markdown("""
             <div class="login-header">
